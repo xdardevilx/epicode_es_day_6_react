@@ -1,15 +1,9 @@
+import React, { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import { keyAPI } from "../data/const";
-import { useState, useEffect } from "react";
 
 const AddComment = (props) => {
-  // state = {
-  //   comment: {
-  //     comment: "",
-  //     rate: 1,
-  //     elementId: this.props.asin,
-  //   },
-  // };
+  console.log(props.asin);
   const commentObj = {
     comment: "",
     rate: 1,
@@ -17,27 +11,18 @@ const AddComment = (props) => {
   };
   const [comment, setComment] = useState(commentObj);
 
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps.asin !== this.props.asin) {
-  //     this.setState({
-  //       comment: {
-  //         ...this.state.comment,
-  //         elementId: this.props.asin,
-  //       },
-  //     });
-  //   }
-  // }
+  useEffect(() => {
+    console.log("comment changed");
+  }, [comment]);
 
-  useEffect(() => {}, [comment]);
-
-  let sendComment = async (e) => {
+  const sendComment = async (e) => {
     e.preventDefault();
     try {
       let response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/comments",
+        "https://striveschool-api.herokuapp.com/api/comments" + props.asin,
         {
           method: "POST",
-          body: JSON.stringify(this.state.comment),
+          body: JSON.stringify(comment),
           headers: {
             "Content-type": "application/json",
             Authorization: keyAPI,
@@ -46,16 +31,6 @@ const AddComment = (props) => {
       );
       if (response.ok) {
         alert("Recensione inviata!");
-        // this.setState(
-
-        //   {
-        //   comment: {
-        //     comment: "",
-        //     rate: 1,
-        //     elementId: this.props.asin,
-        //   },
-
-        // });
         setComment(commentObj);
       } else {
         throw new Error("Qualcosa è andato storto");
@@ -75,13 +50,7 @@ const AddComment = (props) => {
             placeholder="Inserisci qui il testo"
             value={comment.comment}
             onChange={(e) =>
-              // this.setState({
-              //   comment: {
-              //     ...this.state.comment,
-              //     comment: e.target.value,
-              //   },
-              // })
-              setComment(...comment, { comment: e.target.value })
+              setComment({ ...comment, comment: e.target.value })
             }
           />
         </Form.Group>
@@ -90,12 +59,10 @@ const AddComment = (props) => {
           <Form.Control
             as="select"
             value={comment.rate}
-            onChange={(e) => setComment(...comment, { rate: e.target.value })}>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+            onChange={(e) => setComment({ ...comment, rate: e.target.value })}>
+            {[1, 2, 3, 4, 5].map((value) => (
+              <option key={value}>{value}</option>
+            ))}
           </Form.Control>
         </Form.Group>
         <Button variant="primary" type="submit">
