@@ -12,14 +12,17 @@ const AddComment = (props) => {
   const [comment, setComment] = useState(commentObj);
 
   useEffect(() => {
-    console.log("comment changed");
-  }, [comment]);
+    setComment(() => ({
+     ...comment,
+      elementId: props.asin,
+    }));
+  }, [props.asin]);
 
   const sendComment = async (e) => {
     e.preventDefault();
     try {
       let response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/comments" + props.asin,
+        "https://striveschool-api.herokuapp.com/api/comments",
         {
           method: "POST",
           body: JSON.stringify(comment),

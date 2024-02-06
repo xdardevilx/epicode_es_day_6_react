@@ -12,9 +12,10 @@ const BookList = (props) => {
 
   const changeSelectedBook = (asin) => {
     console.log(asin);
-    setState({
+    setState((prevState) => ({
+      ...prevState,
       selectedBook: asin,
-    });
+    }));
   };
 
   return (
