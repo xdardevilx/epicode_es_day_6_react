@@ -11,7 +11,6 @@ const BookList = (props) => {
   const [state, setState] = useState(stateObj);
 
   const changeSelectedBook = (asin) => {
-    console.log(asin);
     setState((prevState) => ({
       ...prevState,
       selectedBook: asin,

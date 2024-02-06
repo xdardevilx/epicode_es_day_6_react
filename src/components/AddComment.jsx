@@ -3,7 +3,6 @@ import { Button, Form } from "react-bootstrap";
 import { keyAPI } from "../data/const";
 
 const AddComment = (props) => {
-  console.log(props.asin);
   const commentObj = {
     comment: "",
     rate: 1,
@@ -16,7 +15,7 @@ const AddComment = (props) => {
      ...comment,
       elementId: props.asin,
     }));
-  }, [props.asin]);
+  }, [props]);
 
   const sendComment = async (e) => {
     e.preventDefault();
