@@ -1,19 +1,19 @@
-import { Component } from 'react'
-import SingleBook from './SingleBook'
-import { Col, Form, Row } from 'react-bootstrap'
-import CommentArea from './CommentArea'
+import { Component } from "react";
+import SingleBook from "./SingleBook";
+import { Col, Form, Row } from "react-bootstrap";
+import CommentArea from "./CommentArea";
 
 class BookList extends Component {
   state = {
-    searchQuery: '',
+    searchQuery: "",
     selectedBook: null,
-  }
+  };
 
   changeSelectedBook = (asin) => {
     this.setState({
       selectedBook: asin,
-    })
-  }
+    });
+  };
 
   render() {
     return (
@@ -55,8 +55,8 @@ class BookList extends Component {
           </Col>
         </Row>
       </>
-    )
+    );
   }
 }
 
-export default BookList
+export default BookList;
